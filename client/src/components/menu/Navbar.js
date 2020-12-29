@@ -15,15 +15,20 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
-import Logo2 from "../../Logo2.png";
 import Typography from "@material-ui/core/Typography";
-import index from "styled-components/dist/styled-components-macro.esm";
-
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
+import PersonIcon from '@material-ui/icons/Person';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AuthService from "../../clientServices/AuthService";
+import useCurrentUser from "../../hooks/UseCurrentUser";
+import {useDispatch, useSelector} from "react-redux";
+import AppsIcon from '@material-ui/icons/Apps';
+import BookIcon from '@material-ui/icons/Book';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
 const drawerWidth = 240;
 
@@ -32,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     appBar: {
-        background: '#CD0276',
+        color: '#FFD166',
+        background: '#6F2DBD',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -84,9 +90,17 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: 0,
     },
+    menuHeader: {
+        color: '#FFD166',
+    }
 }));
 
-export default function PersistentDrawerLeft() {
+function NavBar() {
+    const dispatch = useDispatch();
+    const handleLogout = () =>{
+        history.push("/login");
+        dispatch({type: 'SIGN_OUT'})
+    }
     let history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
@@ -99,39 +113,57 @@ export default function PersistentDrawerLeft() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-
-    function getIcon(name) {
-        switch (name) {
-            case 'Sign Up':
-                return <PersonAddIcon />;
-            case 'Log in':
-                return <ExitToAppIcon />;
-            case 'Home':
-                return <HomeIcon />;
-            default:
-                return <PersonAddIcon />;
-
-        }
-    }
+    const user = useSelector((state) => state.user);
 
     const menuItems = [
         {
-            name: 'Sign up',
-            destinationUrl: '/sign-up',
+            name: user?.username,
+            destinationUrl: '/profile',
             id: 1,
+            icon: <AccountCircleIcon/>,
+            display: user != null
+
         },
         {
-            name: 'Log in',
-            destinationUrl: '/login',
-            id: 2,
-        },
-        {
-            name: 'Home',
+            name: 'Welcome',
             destinationUrl: '/',
             id: 2,
+            icon: <LocalFloristIcon/>,
+            display: true
         },
-    ];
+        {
+            name: 'Sign Up',
+            destinationUrl: '/sign-up',
+            id: 3,
+            icon: <PersonIcon/>,
+            display: user == null
+        },
+        {
+            name: 'Log In',
+            destinationUrl: '/login',
+            id: 4,
+            icon: <ExitToAppIcon/>,
+            display: user == null
 
+        },
+
+        {
+            name: 'Game',
+            destinationUrl: '/games',
+            id: 5,
+            icon: <HomeIcon />,
+            display: user != null
+
+        },
+        {
+            name: 'Logbook/The Wall',
+            destinationUrl: '/wall',
+            id: 5,
+            icon: <BookIcon/>,
+            display: user != null
+        },
+
+    ];
 
     return (
         <div className={classes.root}>
@@ -152,7 +184,7 @@ export default function PersistentDrawerLeft() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap>
+                    <Typography className={classes.menuHeader} variant="h6" noWrap>
                         Menu
                     </Typography>
                 </Toolbar>
@@ -173,36 +205,30 @@ export default function PersistentDrawerLeft() {
                 </div>
                 <Divider />
                 <List>
-                {menuItems.map((item) => (
-                    <ListItem
-                    button
-                    key={item.id}
-                    onClick={ () => history.push(item.destinationUrl)}
-                    >
-                        <ListItemIcon>
-                            {getIcon(item.name)}
-                        </ListItemIcon>
-                        <ListItemText primary={item.name} />
-                    </ListItem>
-                ))}
+                    {menuItems.map((item) => (
+                        <>
+                        { item.display && <ListItem
+                            button
+                            key={item.id}
+                            onClick={ () => history.push(item.destinationUrl)}
+                        >
+                            <ListItemIcon>
+                                {item.icon}
+                            </ListItemIcon>
+                            <ListItemText primary={item.name} />
+                        </ListItem> } </>
+                    ))}
                 </List>
-                {/*<List>*/}
-                {/*    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
-                {/*        <ListItem button key={text}>*/}
-                {/*            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>*/}
-                {/*            <ListItemText primary={text} />*/}
-                {/*        </ListItem>*/}
-                {/*    ))}*/}
-                {/*</List>*/}
                 <Divider />
-                {/*<List>*/}
-                {/*    {['All mail', 'Trash', 'Spam'].map((text, index) => (*/}
-                {/*        <ListItem button key={text}>*/}
-                {/*            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>*/}
-                {/*            <ListItemText primary={text} />*/}
-                {/*        </ListItem>*/}
-                {/*    ))}*/}
-                {/*</List>*/}
+                <List>
+                    {user != null && <ListItem
+                        button
+                        onClick={() => handleLogout()}>
+                        <ListItemIcon><ExitToAppIcon/></ListItemIcon>
+                        <ListItemText primary={"Log Out"}/>
+                    </ListItem>
+                    }
+                </List>
             </Drawer>
             <main
                 className={clsx(classes.content, {
@@ -210,8 +236,8 @@ export default function PersistentDrawerLeft() {
                 })}
             >
                 <div className={classes.drawerHeader} />
-
             </main>
         </div>
     );
 }
+export default NavBar;

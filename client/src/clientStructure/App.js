@@ -1,30 +1,31 @@
 import React from 'react';
-import Form from './pages/SignUp';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
 } from 'react-router-dom';
+import {Provider, useStore} from 'react-redux';
+import {createStore} from "redux";
 import {
     SignUp,
     Profile,
     Login,
     Game,
-    Game10XP,
-    Game20XP,
-    Game100XP,
-    Welcome
-} from './pages';
+    Challenges,
+    Welcome,
+    Wall,
+    Unauthorized
+} from './index';
+import NavBar from "../components/menu/Navbar";
+import {userReducer} from "../hooks/UserReducer";
 
-import './App.scss';
-import '../src/components/menu/Navbar.scss';
-import PersistentDrawerLeft from "./components/menu/Navbar";
-
+const userStore = createStore(userReducer);
 function App () {
 
     return (
+        <Provider store = {userStore}>
         <Router>
-            <PersistentDrawerLeft/>
+            <NavBar/>
                 <Switch>
                      <Route exact path={"/sign-up"}>
                          <SignUp/>
@@ -35,23 +36,24 @@ function App () {
                     <Route exact path={"/login"}>
                         <Login/>
                     </Route>
-                    <Route exact path={"/"}>
+                    <Route exact path={"/games"}>
                         <Game/>
                     </Route>
-                    <Route exact path={"/game10xp"}>
-                        <Game10XP/>
+                    <Route exact path={"/games/:id"}>
+                        <Challenges/>
                     </Route>
-                    <Route exact path={"/game20xp"}>
-                        <Game20XP/>
-                    </Route>
-                    <Route exact path={"/game100xp"}>
-                        <Game100XP/>
-                    </Route>
-                    <Route exact path={"/welcome"}>
+                    <Route exact path={"/"}>
                         <Welcome/>
+                    </Route>
+                    <Route exact path={"/wall"}>
+                        <Wall/>
+                    </Route>
+                    <Route exact path={"/401"}>
+                        <Unauthorized/>
                     </Route>
                 </Switch>
         </Router>
+        </Provider>
      );
  }
 

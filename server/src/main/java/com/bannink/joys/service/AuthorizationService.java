@@ -8,7 +8,8 @@ import com.bannink.joys.payload.request.SignupRequest;
 import com.bannink.joys.payload.response.JwtResponse;
 import com.bannink.joys.payload.response.MessageResponse;
 import com.bannink.joys.repository.RoleRepository;
-import com.bannink.joys.repository.UserRepository;
+import com.bannink.joys.repository.IUserRepository;
+import com.bannink.joys.response.UserResponse;
 import com.bannink.joys.service.security.jwt.JwtUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,14 @@ public class AuthorizationService {
 
     private static final String ROLE_NOT_FOUND_ERROR = "Error: Role is not found.";
 
-    private UserRepository userRepository;
+    private IUserRepository userRepository;
     private PasswordEncoder encoder;
     private RoleRepository roleRepository;
     private AuthenticationManager authenticationManager;
     private JwtUtils jwtUtils;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
+    public void setUserRepository(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -138,7 +139,7 @@ public class AuthorizationService {
      * @param loginRequest De payload met username en password.
      * @return een HTTP-response met daarin de JWT-token.
      */
-    public ResponseEntity<JwtResponse> authenticateUser(@Valid LoginRequest loginRequest) {
+    public ResponseEntity<UserResponse> authenticateUser(@Valid LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
@@ -152,11 +153,7 @@ public class AuthorizationService {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));
+        return ResponseEntity.ok(new UserResponse(userDetails.getUsername(),jwt, userDetails.getEmail(), userDetails.getId()));
     }
 
 }
