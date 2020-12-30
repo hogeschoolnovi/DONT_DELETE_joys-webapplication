@@ -170,7 +170,7 @@ export default function Profile() {
             </Grid>
 
             <Grid container spacing={3}>
-                <Grid item md>
+                <Grid item lg>
                     <Paper className={classes.toDoPaper}>Your public to do list</Paper>
                     {request.state === "loading" &&
                         <p>aan het laden</p>}
@@ -181,8 +181,10 @@ export default function Profile() {
                                     getProfile(user, setRequest)
                                 })}}/>
                     )}
+                    {request.state === "done" && publicChallenges.length === null &&
+                    <p>You have not added any challenge to your to do list. Play the game te get started.</p>}
                 </Grid>
-                <Grid item md>
+                <Grid item lg>
                     <Paper className={classes.toDoPaper}>Your private to do list</Paper>
                     {request.state === "loading" &&
                         <p>aan het laden</p>}

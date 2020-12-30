@@ -19,6 +19,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import {useSelector} from "react-redux";
 import Utils from "../../clientServices/Utils";
 import Tooltip from "@material-ui/core/Tooltip";
+import RandomChallengeCard from "../../components/RandomChallengeCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
 function RandomChallenge(challenges){
     return challenges[Math.floor(Math.random() * challenges.length)];
 }
@@ -77,8 +79,8 @@ function Challenges(props) {
 
     useEffect(() => {
         if (user != null) {
-            const accesToken = user.accessToken;
-            Utils.protectedGet(`/api/games/${id}`, accesToken).then((res) => {
+            const accessToken = user.accessToken;
+            Utils.protectedGet(`/api/games/${id}`, accessToken).then((res) => {
                 if (res.data) {
                     console.log(res);
                     setRandomChallenge(RandomChallenge(res.data.challenges));
@@ -90,78 +92,41 @@ function Challenges(props) {
         }
     },[])
 
-    // const [mediumChallenges, setMediumChallenges] = useState(["This is challenge 1", "This is challenge 1","This is challenge 2", "This is challenge 3", "This is challenge 4", "This is challenge 5", "This is challenge 6", "This is challenge 7", "This is challenge 8", "This is challenge 9", "This is challenge 10",])
-    // const [mediumPickedChallenge, setMediumPickedChallenge] = useState(null);
-    // useEffect(() =>  {
-    //     const randomChallenge = mediumChallenges[Math.floor(Math.random() * mediumChallenges.length)];
-    //     setMediumPickedChallenge(randomChallenge);
-    // });
 
-
-    const add = () => {
-        const accesToken = user.accessToken;
-        Utils.protectedPost(`api/profile/privatetodo/${id}`, accesToken).then((res) => {
-            if(res.data) {
-                console.log(res);
-                alert('Challenge is added to your private to do list. Good luck!')
-            } else {
-                console.log("error");
-            }
-        })
-    }
+    // const add = () => {
+    //     const accessToken = user.accessToken;
+    //     Utils.protectedPost(`api/profile/privatetodo/${randomChallenge.id}`, accessToken).then((res) => {
+    //         if(res.data) {
+    //             console.log(res);
+    //             alert('Challenge is added to your private to do list. Good luck!')
+    //         } else {
+    //             console.log("error");
+    //         }
+    //     })
+    // }
 
 
     return (
-
         <div className={classes.root}>
             {request.state === "done" &&
-
-            <Paper elevation={5} className={classes.paper}>
-                <Grid container spacing={0}>
-                    <Grid item xs={12} sm container>
-                        <Grid item xs container direction="column" spacing={2}>
-                            <Grid item xs>
-                                <Typography gutterBottom variant="subtitle1" className={classes.typographyTitle}>
-                                    {randomChallenge.value} XP * {request.data.game.name}
-                                </Typography>
-                                <Typography variant="body2" gutterBottom className={classes.typographyChallenge}>
-                                    {randomChallenge.name}
-                                </Typography>
-                                <Divider/>
-                                <Typography variant="body2" className={classes.typographyDescription}>
-                                    {randomChallenge.description}
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Button variant={"contained"} className={classes.completeButton}><AddCircle/> PUBLIC</Button>
-                                <Tooltip title={"Add to public to do list"}>
-                                    <Button variant={"contained"} className={classes.completeButton}><LockOpenIcon/> Add</Button>
-                                </Tooltip>
-
-                                <Button variant={"contained"} className={classes.completeButton}>Completed
-                                </Button>
-                                <Button variant={"contained"} className={classes.completeButton}><AddCircleOutlineIcon/> PRIVATE</Button>
-                                <Tooltip title={"Add to private to do list"}>
-                                    <Button variant={"contained"} className={classes.completeButton} onClick={add}><LockIcon/> Add</Button>
-                                </Tooltip>
-
-                            </Grid>
-                            <Button variant={"contained"} className={classes.completeButton} startIcon={<ShuffleIcon/>} onClick={() => {
-                                console.log(request);
-                                setRandomChallenge(RandomChallenge(request.data.game.challenges));
-                                // randomChallenge();
-                                console.log("new generated challenge");
-                            }}>
-                                Shuffle challenge
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Paper>
+                <RandomChallengeCard randomChallenge={RandomChallenge} add={() => {
+                    const accessToken = user.accessToken;
+                    Utils.protectedPost(`api/profile/privatetodo/${randomChallenge.id}`, accessToken).then((res) => {
+                        if(res.data) {
+                            console.log(res);
+                            alert('Challenge is added to your private to do list. Good luck!')
+                        } else {
+                            console.log("error");
+                        }
+                    })}} onShuffleClick={() => {
+                    console.log(request);
+                    setRandomChallenge(RandomChallenge(request.data.game.challenges));
+                    console.log("new generated challenge");
+                    }
+                }/>
             }
             {request.state === "loading" && <p>aan het laden</p>}
             {request.state === "error" && <p>error</p>}
-
         </div>
     );
 }

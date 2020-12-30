@@ -53,8 +53,8 @@ function Game() {
 
     const [request, setRequest] = useState({state: "loading", data: null});
     useEffect(() => {
-        const accesToken = user.accessToken;
-        Utils.protectedGet("/api/games", accesToken).then((res) => {
+        const accessToken = user.accessToken;
+        Utils.protectedGet("/api/games", accessToken).then((res) => {
                 console.log(res);
                 setRequest({state: "done", data: res.data});
             })
@@ -70,7 +70,7 @@ function Game() {
                     {request.state !== "loading" &&
                     request.data.map((challenge) => (
                         <Grid key={challenge.id} item>
-                            <Link to={`games/${challenge.id}`}>
+                            <Link to={`games/${challenge.id}`} style={{textDecoration: 'none'}}>
                                 <Paper className={classes.paper}>
                                     <Typography className={classes.challengeTitle}>
                                         {challenge.name}

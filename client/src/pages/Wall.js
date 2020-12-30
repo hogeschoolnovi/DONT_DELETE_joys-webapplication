@@ -8,6 +8,8 @@ import {RemoveCircle} from "@material-ui/icons";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import {Link, useHistory} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {GrTooltip} from "react-icons/all";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -132,7 +134,10 @@ function Wall() {
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        <Button size={"small"} variant={"contained"} className={classes.joinButton}>join challenge</Button>
+                        <Tooltip title={"Join this challenge and add challenge to your public to do"}>
+                            <Button size={"small"} variant={"contained"} className={classes.joinButton}>join challenge</Button>
+
+                        </Tooltip>
                     </Grid>
                 </Grid>
 
@@ -153,12 +158,13 @@ function Wall() {
                         <Typography variant="body2" className={classes.typographyDescription}>
                             {challenge.description}
                         </Typography>
-                        <Grid item>
-                            <Button variant={"contained"} className={classes.completeButton}><RemoveCircle/> PUBLIC</Button>
-                            <Button variant={"contained"} className={classes.completeButton}>Completed
-                            </Button>
-                            <Button variant={"contained"} className={classes.completeButton}><AddCircleOutlineIcon/> PRIVATE</Button>
-                        </Grid></Paper>
+                        {/*<Grid item>*/}
+                        {/*    <Button variant={"contained"} className={classes.completeButton}><RemoveCircle/> PUBLIC</Button>*/}
+                        {/*    <Button variant={"contained"} className={classes.completeButton}>Completed*/}
+                        {/*    </Button>*/}
+                        {/*    <Button variant={"contained"} className={classes.completeButton}><AddCircleOutlineIcon/> PRIVATE</Button>*/}
+                        {/*</Grid>*/}
+                </Paper>
                 </Grid>
                 </Paper>
                 </Grid>
