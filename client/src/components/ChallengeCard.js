@@ -6,26 +6,20 @@ import {AddCircle} from "@material-ui/icons";
 import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import Paper from "@material-ui/core/Paper";
 import {makeStyles} from "@material-ui/core/styles";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-    },
-    paper: {
-        marginTop: 0,
-        marginBottom: 60,
-        padding: theme.spacing(4),
-        height: 150,
-        textAlign: 'center',
-        background: 'none',
-        color: '#6F2DBD',
-        fontSize: 40,
     },
     challengePaper: {
         padding: theme.spacing(2),
         textAlign: 'center',
         background: '#B388EB',
         margin: 10,
+        '&:hover': {
+            padding: 25,
+        }
     },
     typographyTitle: {
         color: '#FFD166',
@@ -68,6 +62,7 @@ function ChallengeCard({challenge, onRemoveClick}) {
 
     return (
         <Paper key={challenge.id} elevation={5} className={classes.challengePaper}>
+            <Link to={`/challenge/${challenge.id}`} style={{textDecoration: 'none'}}>
             <Typography variant="body2" className={classes.typographyJoined}>
                 amy +7 anderen joined this challenge
                 <br/>
@@ -83,6 +78,7 @@ function ChallengeCard({challenge, onRemoveClick}) {
             <Typography variant="body2" className={classes.typographyDescription}>
                 {challenge.description}
             </Typography>
+            </Link>
             <Grid item>
                 {onRemoveClick &&
                 <Button variant={"contained"} className={classes.completeButton} onClick={() => {onRemoveClick()}}><RemoveCircleOutlineIcon/>remove</Button>

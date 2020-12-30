@@ -1,25 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import {Button, Divider} from "@material-ui/core";
-import * as axios from "axios";
-import ShuffleIcon from '@material-ui/icons/Shuffle';
-import SwapVertIcon from '@material-ui/icons/SwapVert';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import LockIcon from '@material-ui/icons/Lock';
-
 import {
     useHistory,
     useParams
 } from "react-router-dom";
-import {AddCircle} from "@material-ui/icons";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import {useSelector} from "react-redux";
 import Utils from "../../clientServices/Utils";
-import Tooltip from "@material-ui/core/Tooltip";
-import RandomChallengeCard from "../../components/RandomChallengeCard";
+import ActionChallengeCard from "../../components/ActionChallengeCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -61,12 +48,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
 function getNewRandomChallenge(challenges){
     return challenges[Math.floor(Math.random() * challenges.length)];
 }
 
-function Challenges(props) {
+function RandomChallenges() {
     const classes = useStyles();
     const user = useSelector((state) => state.user);
     const history = useHistory();
@@ -92,35 +78,50 @@ function Challenges(props) {
         }
     },[])
 
-
-    // const add = () => {
-    //     const accessToken = user.accessToken;
-    //     Utils.protectedPost(`api/profile/privatetodo/${randomChallenge.id}`, accessToken).then((res) => {
-    //         if(res.data) {
-    //             console.log(res);
-    //             alert('Challenge is added to your private to do list. Good luck!')
-    //         } else {
-    //             console.log("error");
-    //         }
-    //     })
-    // }
-
-
     return (
         <div className={classes.root}>
             {request.state === "done" &&
-                <RandomChallengeCard randomChallenge={randomChallenge} add={() => {
+                <ActionChallengeCard randomChallenge={randomChallenge} onAddPrivateClick={() => {
                     const accessToken = user.accessToken;
                     Utils.protectedPost(`/api/profile/privatetodo/${randomChallenge.id}`, accessToken).then((res) => {
-                        if(res.data) {
+                        if(res) {
                             console.log(res);
-                            alert('Challenge is added to your private to do list. Good luck!')
+                            alert('Challenge is added to your private to do list. Good luck!');
+                            history.push('/games');
                         } else {
                             console.log("error");
                         }
                     }).catch((error) => {
                         console.log(error);
-                        alert("fout opgetreden")
+                        alert("fout opgetreden");
+                    });
+                }} onAddPublicClick={() => {
+                    const accessToken = user.accessToken;
+                    Utils.protectedPost(`/api/profile/publictodo/${randomChallenge.id}`, accessToken).then((res) => {
+                        if(res) {
+                            console.log(res);
+                            alert('Challenge is added to your public to do list. Good luck!');
+                            history.push('/games');
+                        } else {
+                            console.log("error");
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                        alert("fout opgetreden");
+                    });
+                }} onCompletedClick={() => {
+                    const accessToken = user.accessToken;
+                    Utils.protectedPost(`/api/profile/completedtodo/${randomChallenge.id}`, accessToken).then((res) => {
+                        if(res) {
+                            console.log(res);
+                            alert('Challenge completed! You can find the challenge in your completed to-do list.');
+                            history.push('/games');
+                        } else {
+                            console.log("error");
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                        alert("fout opgetreden");
                     });
                 }} onShuffleClick={() => {
                     console.log(request);
@@ -134,4 +135,4 @@ function Challenges(props) {
         </div>
     );
 }
-export default Challenges;
+export default RandomChallenges;

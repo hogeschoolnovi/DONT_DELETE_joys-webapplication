@@ -49,7 +49,7 @@ import {AddCircle, RemoveCircle} from "@material-ui/icons";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-import {useHistory, useParams} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 import Utils from "../clientServices/Utils";
 import ChallengeCard from "../components/ChallengeCard";
 
@@ -178,6 +178,7 @@ export default function Profile() {
                         publicChallenges.map((publicChallenge, index)=>
                             <ChallengeCard challenge={publicChallenge} key={`pub-${index}`} onRemoveClick={() => {
                                 Utils.protectedDelete(`/api/profile/publictodo/${publicChallenge.id}`, accessToken).then((res) => {
+                                    alert("Challenge was successfully removed from your public to-do list.")
                                     getProfile(user, setRequest)
                                 })}}/>
                     )}
@@ -192,6 +193,7 @@ export default function Profile() {
                         privateChallenges.map((privateChallenge, index) =>
                             <ChallengeCard challenge={privateChallenge} key={`pub-${index}`} onRemoveClick={() => {
                                 Utils.protectedDelete(`/api/profile/privatetodo/${privateChallenge.id}`, accessToken).then((res) => {
+                                    alert("Challenge was successfully removed from your private to-do list.")
                                     getProfile(user, setRequest)
                                 })}}/>
                     )}
@@ -204,90 +206,12 @@ export default function Profile() {
                         completedChallenges.map((completedChallenge, index) =>
                             <ChallengeCard challenge={completedChallenge} key={`pub-${index}`} onRemoveClick={() => {
                                 Utils.protectedDelete(`/api/profile/completedtodo/${completedChallenge.id}`, accessToken).then((res) => {
+                                    alert("Challenge was successfully removed from your completed to-do list.")
                                     getProfile(user, setRequest)
                                 })}}/>
                     )}
                 </Grid>
             </Grid>
-
-
-
-
-
-                {/*<Grid container direction={"column"} justify={"flex-start"} alignItems={"flex-start"}>*/}
-                {/*    /!*request.challenges.map((challenges) => {*!/*/}
-                {/*    <Grid key={challenges.id} item>*/}
-                {/*        <Paper elevation={5} className={classes.challengePaper}>*/}
-                {/*            <Grid item xs={6}>*/}
-                {/*                <Typography gutterBottom variant="subtitle1" className={classes.typographyTitle}>*/}
-                {/*                    20XP*/}
-                {/*                    /!*{request.data.randomChallenge.value} XP * {request.data.game.name}*!/*/}
-                {/*                </Typography>*/}
-                {/*                <Typography variant="body2" gutterBottom className={classes.typographyChallenge}>*/}
-                {/*                    Titel*/}
-                {/*                    /!*{request.data.randomChallenge.name}*!/*/}
-                {/*                </Typography>*/}
-                {/*                <Divider/>*/}
-                {/*                <Typography variant="body2" className={classes.typographyDescription}>*/}
-                {/*                    Uitleg*/}
-                {/*                    /!*{request.data.randomChallenge.description}*!/*/}
-                {/*                </Typography>*/}
-                {/*            </Grid>*/}
-                {/*            <Grid item>*/}
-                {/*                <Button className={classes.completeButton}>Completed*/}
-                {/*                </Button>*/}
-                {/*            </Grid>*/}
-                {/*        </Paper>*/}
-                {/*    </Grid>*/}
-                {/*    // }*/}
-                {/*</Grid>*/}
-
-
-
-
-
-    {/*<Grid container direction={"column"} justify={"space-around"} alignItems={"flex-start"}>*/}
-    {/*                {request.state !== "loading" &&*/}
-    {/*                request.data.*/}
-    {/*                    challenges.map((challenges) => (*/}
-    {/*                    <Grid key={challenges.id} item>*/}
-    {/*                        <Paper className={classes.challengePaper}>*/}
-    {/*                            {challenges.title}*/}
-    {/*                        </Paper>*/}
-    {/*                    </Grid>*/}
-
-    {/*                ))}}*/}
-    {/*            </Grid>*/}
-
-
-
-                {/*<Grid container className={classes.root} spacing={2}>*/}
-                {/*    <Grid item xs={6}>*/}
-                {/*        <Grid container justify={"left"} spacing={2}>*/}
-                {/*            {request.state !== "loading" &&*/}
-                {/*            request.data.map((challenge) => (*/}
-                {/*                <Grid key={challenge.id} item>*/}
-                {/*                    <Paper className={classes.challengePaper}/>*/}
-                {/*                </Grid>*/}
-
-                {/*            ))}}*/}
-                {/*            {request.state === "loading" &&*/}
-                {/*            <Grid item xs={6}>*/}
-                {/*                <Grid container justify={"left"} spacing={2}>*/}
-                {/*                    <Paper className={classes.challengePaper}>aan het laden</Paper>*/}
-                {/*                </Grid>*/}
-                {/*            </Grid>*/}
-                {/*                }*/}
-                {/*            {request.data === null &&*/}
-                {/*            <Grid item xs={6}>*/}
-                {/*                <Grid container justify={"left"} spacing={2}>*/}
-                {/*                    <Paper className={classes.challengePaper}>You don't have any challenge added to your public to do list</Paper>*/}
-                {/*                </Grid>*/}
-                {/*            </Grid>}*/}
-                {/*        </Grid>*/}
-                {/*    </Grid>*/}
-                {/*</Grid>*/}
-             {/*</Grid>*/}
          </div>
      );
  }

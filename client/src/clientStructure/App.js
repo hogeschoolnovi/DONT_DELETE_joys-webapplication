@@ -11,10 +11,11 @@ import {
     Profile,
     Login,
     Game,
-    Challenges,
+    RandomChallenges,
     Welcome,
     Wall,
-    Unauthorized
+    Unauthorized,
+    Challenge,
 } from './index';
 import NavBar from "../components/menu/Navbar";
 import {userReducer} from "../hooks/UserReducer";
@@ -40,7 +41,7 @@ function App () {
                         <Game/>
                     </Route>
                     <Route exact path={"/games/:id"}>
-                        <Challenges/>
+                        <RandomChallenges/>
                     </Route>
                     <Route exact path={"/"}>
                         <Welcome/>
@@ -50,6 +51,9 @@ function App () {
                     </Route>
                     <Route exact path={"/401"}>
                         <Unauthorized/>
+                    </Route>
+                    <Route exact path={"/challenge/:id"}>
+                        <Challenge/>
                     </Route>
                 </Switch>
         </Router>

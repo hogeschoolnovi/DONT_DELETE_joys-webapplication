@@ -37,9 +37,12 @@ const login = async (username, password) => {
                     console.log(response.data);
                     return response.data;
                 } else {
-                    alert("Something went wrong");
+                    alert("Sorry! Something went wrong");
                 }
-            })
+            }).catch((error) => {
+            console.log(error)
+            alert("Sign in failed")
+    })
 
     }
 

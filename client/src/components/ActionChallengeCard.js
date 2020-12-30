@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function RandomChallengeCard({randomChallenge, add, onShuffleClick}) {
+function ActionChallengeCard({randomChallenge, onAddPrivateClick, onAddPublicClick, onCompletedClick, onShuffleClick}) {
     const classes = useStyles();
 
     return (
@@ -71,14 +71,14 @@ function RandomChallengeCard({randomChallenge, add, onShuffleClick}) {
                         </Grid>
                         <Grid item>
                             <Tooltip title={"Add challenge to your public to do list"}>
-                                <Button variant={"contained"} className={classes.completeButton}><LockOpenIcon/> Add</Button>
+                                <Button variant={"contained"} className={classes.completeButton} onClick={() => {onAddPublicClick()}}><LockOpenIcon/> Add</Button>
                             </Tooltip>
                             <Tooltip title={"Complete this challenge"}>
-                                <Button variant={"contained"} className={classes.completeButton}>Completed
+                                <Button variant={"contained"} className={classes.completeButton} onClick={() => {onCompletedClick()}}>Completed
                                 </Button>
                             </Tooltip>
                             <Tooltip title={"Add challenge to your private to do list"}>
-                                <Button variant={"contained"} className={classes.completeButton} onClick={() => {add()}}><LockIcon/> Add</Button>
+                                <Button variant={"contained"} className={classes.completeButton} onClick={() => {onAddPrivateClick()}}><LockIcon/> Add</Button>
                             </Tooltip>
                         </Grid>
                         <Tooltip title={"Get a different challenge"}>
@@ -92,4 +92,4 @@ function RandomChallengeCard({randomChallenge, add, onShuffleClick}) {
         </Paper>
     )
 }
-export default RandomChallengeCard;
+export default ActionChallengeCard;

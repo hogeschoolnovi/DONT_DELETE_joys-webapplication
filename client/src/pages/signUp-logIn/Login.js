@@ -60,10 +60,13 @@ function Login(){
         username: yup
             .string()
             .required("Username is a required field")
-            .min(6, "Username must be at least 6 characters"),
+            .min(6, "Username must be at least 6 characters")
+            .max(20, "Username can't be more than 20 characters"),
         password: yup
             .string()
             .required("Please enter your password")
+            .max(40, "Password can't be more than 40 characters")
+            .min(8, "Password must contain at least 8 characters")
             .matches(
                 /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
                 "Password must contain at least 8 characters, one uppercase, one number and one special character"
