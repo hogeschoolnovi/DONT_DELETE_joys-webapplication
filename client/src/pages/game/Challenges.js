@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function RandomChallenge(challenges){
+function getNewRandomChallenge(challenges){
     return challenges[Math.floor(Math.random() * challenges.length)];
 }
 
@@ -83,7 +83,7 @@ function Challenges(props) {
             Utils.protectedGet(`/api/games/${id}`, accessToken).then((res) => {
                 if (res.data) {
                     console.log(res);
-                    setRandomChallenge(RandomChallenge(res.data.challenges));
+                    setRandomChallenge(getNewRandomChallenge(res.data.challenges));
                     setRequest({state: "done", data: {game: res.data}});
                 } else {
                     setRequest({state: "error", data: null});
@@ -109,18 +109,22 @@ function Challenges(props) {
     return (
         <div className={classes.root}>
             {request.state === "done" &&
-                <RandomChallengeCard randomChallenge={RandomChallenge} add={() => {
+                <RandomChallengeCard randomChallenge={randomChallenge} add={() => {
                     const accessToken = user.accessToken;
-                    Utils.protectedPost(`api/profile/privatetodo/${randomChallenge.id}`, accessToken).then((res) => {
+                    Utils.protectedPost(`/api/profile/privatetodo/${randomChallenge.id}`, accessToken).then((res) => {
                         if(res.data) {
                             console.log(res);
                             alert('Challenge is added to your private to do list. Good luck!')
                         } else {
                             console.log("error");
                         }
-                    })}} onShuffleClick={() => {
+                    }).catch((error) => {
+                        console.log(error);
+                        alert("fout opgetreden")
+                    });
+                }} onShuffleClick={() => {
                     console.log(request);
-                    setRandomChallenge(RandomChallenge(request.data.game.challenges));
+                    setRandomChallenge(getNewRandomChallenge(request.data.game.challenges));
                     console.log("new generated challenge");
                     }
                 }/>

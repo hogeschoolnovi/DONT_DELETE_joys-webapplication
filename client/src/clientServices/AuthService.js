@@ -1,4 +1,5 @@
 import http from './http-common';
+import Utils from "./Utils";
 
 const register = async (username, email, password) => {
     try {
@@ -28,7 +29,7 @@ const logout = () => {
 }
 
 const login = async (username, password) => {
-        return http.post('/auth/signin', {
+        return Utils.unProtectedPost('/api/auth/signin', {
             username,
             password,
         }).then((response) => {
