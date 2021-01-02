@@ -37,7 +37,8 @@ public class GamesController {
         Optional<Game> game = gameRepository.findById(id);
         if (game.isPresent()) {
             Game gameInfo = game.get();
-            List<Challenge> challenges = challengeInformationRepository.findByGameId(gameInfo.getId());
+            List<Challenge> challenges = game.get().getChallenges();
+//                    challengeInformationRepository.findByGameId(gameInfo.getId());
             GameResponse gameResponse = new GameResponse(gameInfo.getId(), gameInfo.getName(), gameInfo.getDescription(), challenges);
             return gameResponse;
         }else {

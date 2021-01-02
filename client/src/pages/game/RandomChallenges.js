@@ -79,7 +79,7 @@ function RandomChallenges() {
 
     return (
         <div className={classes.root}>
-            {request.state === "done" &&
+            {request.state === "done" && randomChallenge &&
                 <ActionChallengeCard randomChallenge={randomChallenge} onAddPrivateClick={() => {
                     const accessToken = user.accessToken;
                     Utils.protectedPost(`/api/profile/privatetodo/${randomChallenge.id}`, accessToken).then((res) => {
@@ -129,6 +129,8 @@ function RandomChallenges() {
                     }
                 }/>
             }
+            {request.state === "done" && !randomChallenge &&
+            <p>There are no challenges for this level</p>}
             {request.state === "loading" && <p>aan het laden</p>}
             {request.state === "error" && <p>error</p>}
         </div>

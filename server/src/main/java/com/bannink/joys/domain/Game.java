@@ -3,6 +3,7 @@ package com.bannink.joys.domain;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Game {
@@ -12,6 +13,9 @@ public class Game {
     private Long id;
     private String name;
     private String description;
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="challenge_id")
+    private List<Challenge> challenges;
 
     public Game(){
 
@@ -45,5 +49,13 @@ public class Game {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Challenge> getChallenges() {
+        return challenges;
+    }
+
+    public void setChallenges(List<Challenge> challenges) {
+        this.challenges = challenges;
     }
 }

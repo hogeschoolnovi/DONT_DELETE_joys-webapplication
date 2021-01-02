@@ -2,25 +2,28 @@ package com.bannink.joys.response;
 
 import com.bannink.joys.domain.Challenge;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameResponse {
     private Long id;
     private String name;
     private String description;
-    private List<Challenge> challenges;
+    private List<ChallengeResponse> challenges;
 
     public GameResponse(Long id, String name, String description, List<Challenge> challenges) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.challenges = challenges;
+        this.setChallenges(challenges);
     }
 
-    public List<Challenge> getChallenges() {
-        return challenges;
+    public void setChallenges(List<Challenge> challenges) {
+        this.challenges = new ArrayList<>();
+        for (Challenge challenge : challenges) {
+            this.challenges.add(new ChallengeResponse(challenge.getId(), challenge.getLevel(), challenge.getName(), challenge.getDescription(), challenge.getValue()));
+        }
     }
-
     public Long getId() {
         return id;
     }
@@ -45,7 +48,7 @@ public class GameResponse {
         this.description = description;
     }
 
-    public void setChallenges(List<Challenge> challenges) {
-        this.challenges = challenges;
+    public List<ChallengeResponse> getChallenges() {
+        return challenges;
     }
 }

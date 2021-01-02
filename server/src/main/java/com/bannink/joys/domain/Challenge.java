@@ -11,7 +11,8 @@ public class Challenge {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private long id;
-    private long gameId;
+    @ManyToOne
+    private Game game;
     private String level;
     private String name;
     private String description;
@@ -20,9 +21,8 @@ public class Challenge {
     public Challenge() {
 
     }
-    public Challenge(long id, long gameId, String level, String name, String description, int value) {
+    public Challenge(long id, String level, String name, String description, int value) {
         this.id = id;
-        this.gameId = gameId;
         this.level = level;
         this.name = name;
         this.description = description;
@@ -35,14 +35,6 @@ public class Challenge {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public long getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(long gameId) {
-        this.gameId = gameId;
     }
 
     public String getLevel() {
@@ -77,4 +69,11 @@ public class Challenge {
         this.value = value;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 }
