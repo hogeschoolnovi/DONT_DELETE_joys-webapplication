@@ -19,6 +19,7 @@ import {
 } from './index';
 import NavBar from "../components/menu/Navbar";
 import {userReducer} from "../hooks/UserReducer";
+import PublicProfile from "../pages/PublicProfile";
 
 const userStore = createStore(userReducer);
 function App () {
@@ -34,6 +35,9 @@ function App () {
                      <Route exact path={"/profile"}>
                          <Profile/>
                      </Route>
+                    <Route exact path={"public/profile/:id"}>
+                        <PublicProfile/>
+                    </Route>
                     <Route exact path={"/login"}>
                         <Login/>
                     </Route>

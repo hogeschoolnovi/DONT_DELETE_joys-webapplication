@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: 300,
         background: '#B388EB',
         textAlign: 'center',
-
     },
     typographyTitle: {
         color: '#FFD166',

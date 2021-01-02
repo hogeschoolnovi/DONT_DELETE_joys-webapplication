@@ -1,10 +1,11 @@
 package com.bannink.joys.controller;
 
-import com.bannink.joys.domain.ChallengeInformation;
+import com.bannink.joys.domain.Challenge;
+import com.bannink.joys.response.GameCompactResponse;
+import com.bannink.joys.response.GameResponse;
 import com.bannink.joys.domain.Game;
-import com.bannink.joys.domain.GameInformation;
-import com.bannink.joys.repository.IChallengeInformationRepository;
-import com.bannink.joys.repository.IGameInformationRepository;
+import com.bannink.joys.repository.IChallengeRepository;
+import com.bannink.joys.repository.IGameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,23 +19,27 @@ import java.util.Optional;
 public class GamesController {
 
     @Autowired
-    IGameInformationRepository gameInformationRepository;
+    IGameRepository gameRepository;
     @Autowired
-    IChallengeInformationRepository challengeInformationRepository;
+    IChallengeRepository challengeInformationRepository;
 
     @GetMapping("")
-    public List<GameInformation> index(){
-        List<GameInformation> games = gameInformationRepository.findAll();
-        return games;
+    public List<GameCompactResponse> index(){
+        List<Game> games = gameRepository.findAll();
+        List<GameCompactResponse> gameCompactResponses = new ArrayList<>();
+        for (Game game : games){
+            gameCompactResponses.add(new GameCompactResponse(game.getId(), game.getName(), game.getDescription()));
+        }
+        return gameCompactResponses;
     }
     @GetMapping("/{id}")
-    public Game getForId (@PathVariable ("id") long id) {
-        Optional<GameInformation> gameInformation = gameInformationRepository.findById(id);
-        if (gameInformation.isPresent()) {
-            GameInformation gameInfo = gameInformation.get();
-            List<ChallengeInformation> challenges = challengeInformationRepository.findByGameId(gameInfo.getId());
-            Game game = new Game(gameInfo.getId(), gameInfo.getName(), gameInfo.getDescription(), challenges);
-            return game;
+    public GameResponse getForId (@PathVariable ("id") long id) {
+        Optional<Game> game = gameRepository.findById(id);
+        if (game.isPresent()) {
+            Game gameInfo = game.get();
+            List<Challenge> challenges = challengeInformationRepository.findByGameId(gameInfo.getId());
+            GameResponse gameResponse = new GameResponse(gameInfo.getId(), gameInfo.getName(), gameInfo.getDescription(), challenges);
+            return gameResponse;
         }else {
             return null;
         }

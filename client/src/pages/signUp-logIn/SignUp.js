@@ -82,7 +82,7 @@ function SignUp() {
         initialValues,
         validationSchema,
         onSubmit: values => {
-            AuthService.register(values.username, values.email, values.password).then(() => {console.log('dit is de signup')})
+            AuthService.register(values.username, values.email, values.password).then(() => {console.log('dit is de signup')}).catch(() => {alert("Something went wrong. Sign up failed.")})
     }})
 
     const usernameProps = formik.getFieldProps("username");

@@ -3,15 +3,13 @@ import Utils from "./Utils";
 
 const register = async (username, email, password) => {
     try {
-        const register = await http.post('/auth/signup/', {
+        const register = await http.post('/auth/signup', {
             username,
             email,
             password
         });
-        setTimeout(() => {
             alert('Your sign up was successful. Welcome to Joys');
             window.location.assign('/login')
-        },3000)
     } catch (error) {
         console.log(error.message);
         error.message === 'Request failed with status code 500' && alert('Invalid email, password or username')

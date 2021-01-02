@@ -68,16 +68,16 @@ function Game() {
             <Grid item xs={12}>
                 <Grid container justify="center" spacing={spacing}>
                     {request.state !== "loading" &&
-                    request.data.map((challenge) => (
-                        <Grid key={challenge.id} item>
-                            <Link to={`games/${challenge.id}`} style={{textDecoration: 'none'}}>
+                    request.data.map((game) => (
+                        <Grid key={game.id} item>
+                            <Link to={`games/${game.id}`} style={{textDecoration: 'none'}}>
                                 <Paper className={classes.paper}>
                                     <Typography className={classes.challengeTitle}>
-                                        {challenge.name}
+                                        {game.name}
                                     </Typography>
                                     <br/>
                                     <Typography className={classes.challengeContent}>
-                                        {challenge.description}
+                                        {game.description}
                                     </Typography>
                                 </Paper>
                             </Link>

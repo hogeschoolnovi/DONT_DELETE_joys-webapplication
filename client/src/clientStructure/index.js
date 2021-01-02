@@ -9,6 +9,7 @@ import Welcome from "../pages/Welcome";
 import Wall from "../pages/Wall";
 import Unauthorized from "../pages/Unauthorized";
 import Challenge from "../pages/Challenge";
+import PublicProfile from "../pages/PublicProfile";
 
 export {
     SignUp,
@@ -22,4 +23,5 @@ export {
     Wall,
     Unauthorized,
     Challenge,
+    PublicProfile,
 }

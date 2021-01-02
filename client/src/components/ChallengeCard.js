@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 10,
         fontStyle: 'oblique',
         textAlign: "left",
-        marginRight: 150,
+        // marginRight: 150,
 
     },
     typographyProfile: {

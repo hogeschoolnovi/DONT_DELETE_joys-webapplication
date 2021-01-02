@@ -1,27 +1,20 @@
-package com.bannink.joys.domain;
+package com.bannink.joys.response;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.bannink.joys.domain.Challenge;
 
-import javax.persistence.*;
+import java.util.List;
 
-@Entity
-public class GameInformation {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class GameCompactResponse {
     private Long id;
     private String name;
     private String description;
 
-    public GameInformation(){
-
-    }
-
-    public GameInformation(Long id, String name, String description) {
+    public GameCompactResponse(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
+
 
     public Long getId() {
         return id;
@@ -46,4 +39,6 @@ public class GameInformation {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }
+

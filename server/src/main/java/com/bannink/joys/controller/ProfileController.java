@@ -1,26 +1,19 @@
 package com.bannink.joys.controller;
 
-import com.bannink.joys.domain.ChallengeInformation;
-import com.bannink.joys.domain.GameInformation;
+import com.bannink.joys.domain.Challenge;
 import com.bannink.joys.domain.User;
-import com.bannink.joys.payload.request.*;
-import com.bannink.joys.payload.response.*;
-import com.bannink.joys.repository.IChallengeInformationRepository;
-import com.bannink.joys.repository.IUserRepository;
+import com.bannink.joys.repository.IChallengeRepository;
 import com.bannink.joys.repository.IUserRepository;
 import com.bannink.joys.response.ProfileResponse;
-import com.bannink.joys.response.UserResponse;
+import com.bannink.joys.response.PublicProfileResponse;
 import com.bannink.joys.service.AuthorizationService;
 
 import com.bannink.joys.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,7 +38,7 @@ public class ProfileController {
     IUserRepository userRepository;
 
     @Autowired
-    IChallengeInformationRepository challengeInformationRepository;
+    IChallengeRepository challengeInformationRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<ProfileResponse> getUserById(@PathVariable(value = "id") Long id) {
@@ -61,10 +54,23 @@ public class ProfileController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/public/{id}")
+            public ResponseEntity<PublicProfileResponse> getUserById(@PathVariable(value="id") long id){
+        Optional<User> user = userRepository.findById(id);
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user.isPresent() && userDetails.getId() != id) {
+            PublicProfileResponse publicProfileResponse = new PublicProfileResponse(user.get().getUsername());
+            publicProfileResponse.setPublicToDo(user.get().getPublicToDo());
+            publicProfileResponse.setCompletedToDo(user.get().getCompletedToDo());
+            return ResponseEntity.ok(publicProfileResponse);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PostMapping("/privatetodo/{challengeId}")
     public ResponseEntity addChallengeToPrivateToDo(@PathVariable(value = "challengeId") Long challengeId){
-        Optional<ChallengeInformation> challenge = challengeInformationRepository.findById(challengeId);
+        Optional<Challenge> challenge = challengeInformationRepository.findById(challengeId);
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<User> user = userRepository.findById(userDetails.getId());
         if (user.isPresent() && challenge.isPresent()){
@@ -77,7 +83,7 @@ public class ProfileController {
     }
     @DeleteMapping("/privatetodo/{challengeId}")
     public ResponseEntity removeChallengeFromPrivateToDo(@PathVariable(value = "challengeId") Long challengeId){
-        Optional<ChallengeInformation> challenge = challengeInformationRepository.findById(challengeId);
+        Optional<Challenge> challenge = challengeInformationRepository.findById(challengeId);
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<User> user = userRepository.findById(userDetails.getId());
         if (user.isPresent() && challenge.isPresent()){
@@ -91,7 +97,7 @@ public class ProfileController {
 
     @PostMapping("/publictodo/{challengeId}")
     public ResponseEntity addChallengeToPublicToDo(@PathVariable(value = "challengeId") Long challengeId){
-        Optional<ChallengeInformation> challenge = challengeInformationRepository.findById(challengeId);
+        Optional<Challenge> challenge = challengeInformationRepository.findById(challengeId);
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<User> user = userRepository.findById(userDetails.getId());
         if (user.isPresent() && challenge.isPresent()){
@@ -105,7 +111,7 @@ public class ProfileController {
 
     @DeleteMapping("/publictodo/{challengeId}")
     public ResponseEntity removeChallengeFromPublicToDo(@PathVariable(value = "challengeId") Long challengeId){
-        Optional<ChallengeInformation> challenge = challengeInformationRepository.findById(challengeId);
+        Optional<Challenge> challenge = challengeInformationRepository.findById(challengeId);
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<User> user = userRepository.findById(userDetails.getId());
         if (user.isPresent() && challenge.isPresent()){
@@ -118,7 +124,7 @@ public class ProfileController {
     }
     @PostMapping("/completedtodo/{challengeId}")
     public ResponseEntity addCompletedToPublicToDo(@PathVariable(value = "challengeId") Long challengeId){
-        Optional<ChallengeInformation> challenge = challengeInformationRepository.findById(challengeId);
+        Optional<Challenge> challenge = challengeInformationRepository.findById(challengeId);
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<User> user = userRepository.findById(userDetails.getId());
         if (user.isPresent() && challenge.isPresent()){
@@ -132,7 +138,7 @@ public class ProfileController {
 
     @DeleteMapping("/completedtodo/{challengeId}")
     public ResponseEntity removeChallengeFromCompletedToDo(@PathVariable(value = "challengeId") Long challengeId){
-        Optional<ChallengeInformation> challenge = challengeInformationRepository.findById(challengeId);
+        Optional<Challenge> challenge = challengeInformationRepository.findById(challengeId);
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<User> user = userRepository.findById(userDetails.getId());
         if (user.isPresent() && challenge.isPresent()){

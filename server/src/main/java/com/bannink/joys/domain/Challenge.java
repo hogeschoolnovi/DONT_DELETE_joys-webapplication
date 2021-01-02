@@ -5,7 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-public class ChallengeInformation {
+public class Challenge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,10 +17,10 @@ public class ChallengeInformation {
     private String description;
     private int value;
 
-    public ChallengeInformation() {
+    public Challenge() {
 
     }
-    public ChallengeInformation(long id, long gameId, String level, String name, String description, int value) {
+    public Challenge(long id, long gameId, String level, String name, String description, int value) {
         this.id = id;
         this.gameId = gameId;
         this.level = level;

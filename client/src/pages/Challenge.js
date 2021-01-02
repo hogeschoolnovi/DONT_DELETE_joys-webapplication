@@ -15,21 +15,23 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    paper: {
-        marginTop: 0,
-        marginBottom: 60,
-        padding: theme.spacing(4),
-        height: 150,
-        textAlign: 'center',
-        background: 'none',
-        color: '#6F2DBD',
-        fontSize: 40,
-    },
+    // paper: {
+    //     padding: theme.spacing(2),
+    //     marginTop: 250,
+    //     margin: 'auto',
+    //     maxWidth: 450,
+    //     maxHeight: 300,
+    //     background: '#B388EB',
+    //     textAlign: 'center',
+    // },
     challengePaper: {
         padding: theme.spacing(2),
-        textAlign: 'center',
+        marginTop: 250,
+        margin: 'auto',
+        maxWidth: 450,
+        maxHeight: 300,
         background: '#B388EB',
-        margin: 10,
+        textAlign: 'center',
     },
     typographyTitle: {
         color: '#FFD166',
@@ -72,16 +74,17 @@ function Challenge(challenge) {
     const user = useSelector((state) => state.user);
     const history = useHistory();
     // const [request, setRequest] = useState({state: "loading", data: null});
-    // if (user == null) {
-    //     history.push('/401');
-    // }
+    if (user == null) {
+        history.push('/401');
+    }
+    let {id} = useParams();
     const [request, setRequest] = useState({state: "loading", data: null});
     useEffect(() => {
         if (user == null) {
             history.push('/401');
         }
         const accessToken = user.accessToken;
-        Utils.protectedGet(`/api/challenge/${challenge.id}`, accessToken).then((res) => {
+        Utils.protectedGet(`/api/challenge/${id}`, accessToken).then((res) => {
             console.log(res);
             setRequest({state: "done", data: res.data});
         })
@@ -91,31 +94,31 @@ function Challenge(challenge) {
     return (
         <div className={classes.root}>
             {request.state === "done" &&
-            <Paper key={request.data.challenge.id} elevation={5} className={classes.challengePaper}>
+            <Paper key={id} elevation={5} className={classes.challengePaper}>
             <Typography variant="body2" className={classes.typographyJoined}>
                 amy +7 anderen joined this challenge
                 <br/>
                 bla +2 anderen completed this challenge
             </Typography>
             <Typography gutterBottom variant={"subtitle1"} className={classes.typographyTitle}>
-                {request.data.challenge.value}XP * {request.data.challenge.level}
+                {request.data.value}XP * {request.data.level}
             </Typography>
             <Typography variant="body2" gutterBottom className={classes.typographyChallenge}>
-                {request.data.challenge.name}
+                {request.data.name}
             </Typography>
             <Divider/>
             <Typography variant="body2" className={classes.typographyDescription}>
-                {request.data.challenge.description}
+                {request.data.description}
             </Typography>
             <Grid item>
                 <Tooltip title={"Add challenge to your public to do list"}>
                     <Button variant={"contained"} className={classes.completeButton} onClick={() => {
                         const accessToken = user.accessToken;
-                        Utils.protectedPost(`/api/profile/publictodo/${challenge.id}`, accessToken).then((res) => {
-                            if(res.data) {
+                        Utils.protectedPost(`/api/profile/publictodo/${id}`, accessToken).then((res) => {
+                            if(res) {
                                 console.log(res);
                                 alert('Challenge is added to your public to do list. Good luck!');
-                                history.push('/games');
+                                history.push('/profile');
                             } else {
                                 console.log("error");
                             }
@@ -128,11 +131,11 @@ function Challenge(challenge) {
                 <Tooltip title={"Complete this challenge"}>
                     <Button variant={"contained"} className={classes.completeButton} onClick={() => {
                         const accessToken = user.accessToken;
-                        Utils.protectedPost(`/api/profile/completedtodo/${challenge.id}`, accessToken).then((res) => {
-                            if(res.data) {
+                        Utils.protectedPost(`/api/profile/completedtodo/${id}`, accessToken).then((res) => {
+                            if(res) {
                                 console.log(res);
-                                alert('Challenge is added to your private to do list. Good luck!');
-                                history.push('/games');
+                                alert('Challenge completed! You can find the challenge in your completed challenges list.');
+                                history.push('/profile');
                             } else {
                                 console.log("error");
                             }
@@ -146,11 +149,11 @@ function Challenge(challenge) {
                 <Tooltip title={"Add challenge to your private to do list"}>
                     <Button variant={"contained"} className={classes.completeButton} onClick={() => {
                         const accessToken = user.accessToken;
-                        Utils.protectedPost(`/api/profile/privatetodo/${challenge.id}`, accessToken).then((res) => {
-                            if(res.data) {
+                        Utils.protectedPost(`/api/profile/privatetodo/${id}`, accessToken).then((res) => {
+                            if(res) {
                                 console.log(res);
-                                alert('Challenge is added to your private to do list. Good luck!');
-                                history.push('/games');
+                                alert('Challenge is added to your private to-do list. Good luck!');
+                                history.push('/profile');
                             } else {
                                 console.log("error");
                             }

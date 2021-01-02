@@ -1,27 +1,15 @@
 package com.bannink.joys.controller;
 
-import com.bannink.joys.domain.ChallengeInformation;
-import com.bannink.joys.domain.GameInformation;
-import com.bannink.joys.domain.User;
 import com.bannink.joys.payload.request.*;
 import com.bannink.joys.payload.response.*;
-import com.bannink.joys.repository.IChallengeInformationRepository;
+import com.bannink.joys.repository.IChallengeRepository;
 import com.bannink.joys.repository.IUserRepository;
-import com.bannink.joys.repository.IUserRepository;
-import com.bannink.joys.response.ProfileResponse;
 import com.bannink.joys.response.UserResponse;
 import com.bannink.joys.service.AuthorizationService;
 
-import com.bannink.joys.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Uitleg over CrossOrigin en CORS:
@@ -45,7 +33,7 @@ public class AuthController {
     IUserRepository userRepository;
 
     @Autowired
-    IChallengeInformationRepository challengeInformationRepository;
+    IChallengeRepository challengeInformationRepository;
 
     @PostMapping("/signin")
     public ResponseEntity<UserResponse> authenticateUser(@RequestBody LoginRequest loginRequest) {

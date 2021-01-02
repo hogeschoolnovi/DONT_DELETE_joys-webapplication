@@ -20,6 +20,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
+import PublicChallengeCard from "../components/PublicChallengeCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -130,6 +131,7 @@ export default function Profile() {
     const user = useSelector((state) => state.user);
     const [request, setRequest] = useState({state: "loading", data: null});
     const accessToken = user?.accessToken;
+    let {id} = useParams();
 
     if (user == null) {
         history.push('/401');
@@ -143,8 +145,7 @@ export default function Profile() {
             // if (user.id != {id}){
             //     history.push('/401');
             // }
-            const id = user.id;
-            Utils.protectedGet(`/api/profile/${id}`, user.accessToken).then((res) => {
+            Utils.protectedGet(`/api/profile/public/${id}`, user.accessToken).then((res) => {
                 if (res) {
                     console.log(res);
                     setRequest({state: "done", data: res.data});
@@ -159,7 +160,6 @@ export default function Profile() {
         getProfile(user, setRequest)
     },[])
 
-    const privateChallenges= request.state!=="done"?[]:request.data.privateToDo;
     const publicChallenges= request.state!=="done"?[]:request.data.publicToDo;
     const completedChallenges= request.state!=="done"?[]:request.data.completedToDo;
 
@@ -200,14 +200,10 @@ export default function Profile() {
                 <Grid item xs={12} sm={6} lg={3} justify={"center"} alignItems={"flex-start"}>
                     <Paper className={classes.toDoPaper}>Your public to-do list</Paper>
                     {request.state === "loading" &&
-                        <p>aan het laden</p>}
+                    <p>aan het laden</p>}
                     {request.state === "done" | publicChallenges.length !== 0 &&
-                        publicChallenges.map((publicChallenge, index)=>
-                            <ChallengeCard challenge={publicChallenge} key={`pub-${index}`} onRemoveClick={() => {
-                                Utils.protectedDelete(`/api/profile/publictodo/${publicChallenge.id}`, accessToken).then((res) => {
-                                    alert("Challenge was successfully removed from your public to-do list.")
-                                    getProfile(user, setRequest)
-                                })}}/>
+                    publicChallenges.map((publicChallenge, index)=>
+                        <PublicChallengeCard challenge={publicChallenge} key={`pub-${index}`}/>
                     )}
                     {publicChallenges.length === 0 &&
                     <Link to={`/games`} style={{textDecoration: 'none'}}>
@@ -218,67 +214,43 @@ export default function Profile() {
                     }
                 </Grid>
                 <Grid item xs={12} sm={6} lg={3} justify={"center"} alignItems={"flex-start"}>
-                    <Paper className={classes.toDoPaper}>Your private to-do list</Paper>
-                    {request.state === "loading" &&
-                        <p>aan het laden</p>}
-                    {request.state === "done"&&
-                        privateChallenges.map((privateChallenge, index) =>
-                            <ChallengeCard challenge={privateChallenge} key={`pub-${index}`} onRemoveClick={() => {
-                                Utils.protectedDelete(`/api/profile/privatetodo/${privateChallenge.id}`, accessToken).then((res) => {
-                                    alert("Challenge was successfully removed from your private to-do list.")
-                                    getProfile(user, setRequest)
-                                })}}/>
-                    )}
-                    {privateChallenges.length === 0 &&
-                    <Link to={`/games`} style={{textDecoration: 'none'}}>
-                            <Typography gutterBottom variant={"subtitle1"} className={classes.typographyEmpty}>
-                                Your private to-do list is empty. Click here to play the game and start adding challenges to your private to-do list.
-                            </Typography>
-                    </Link>
-                    }
-                </Grid>
-                <Grid item xs={12} sm={6} lg={3} justify={"center"} alignItems={"flex-start"}>
                     <Paper className={classes.toDoPaper}>Your completed challenges</Paper>
                     {request.state === "loading" &&
-                        <p>aan het laden</p>}
+                    <p>aan het laden</p>}
                     {request.state === "done"&&
-                        completedChallenges.map((completedChallenge, index) =>
-                            <ChallengeCard challenge={completedChallenge} key={`pub-${index}`} onRemoveClick={() => {
-                                Utils.protectedDelete(`/api/profile/completedtodo/${completedChallenge.id}`, accessToken).then((res) => {
-                                    alert("Challenge was successfully removed from your completed to-do list.")
-                                    getProfile(user, setRequest)
-                                })}}/>
+                    completedChallenges.map((completedChallenge, index) =>
+                        <PublicChallengeCard challenge={completedChallenge} key={`pub-${index}`}/>
                     )}
                     {completedChallenges.length === 0 &&
                     <Link to={`/games`} style={{textDecoration: 'none'}}>
                         <Typography gutterBottom variant={"subtitle1"} className={classes.typographyEmpty}>
-                                    You have not completed a challenge yet. Click here to play the game and complete a challenge.
+                            You have not completed a challenge yet. Click here to play the game and complete a challenge.
                         </Typography>
                     </Link>
                     }
                 </Grid>
                 <Grid item xs={12} sm={3} lg={6}>
                     <Paper className={classes.toDoPaper}>Following</Paper>
-                        <TableContainer component={Paper} elevation={4} pageSize={5} className={classes.table}>
-                            <Table aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell className={classes.tableHeader}>Username</TableCell>
-                                        <TableCell align="center"className={classes.tableHeader}>XP</TableCell>
+                    <TableContainer component={Paper} elevation={4} pageSize={5} className={classes.table}>
+                        <Table aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell className={classes.tableHeader}>Username</TableCell>
+                                    <TableCell align="center"className={classes.tableHeader}>XP</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows.map((row) => (
+                                    <TableRow key={row.id} className={classes.tableRow}>
+                                        <TableCell component="th" scope="row" className={classes.tableUsername}>
+                                            {row.lastName}
+                                        </TableCell>
+                                        <TableCell align="center" className={classes.tableXP}>{row.XP} XP</TableCell>
                                     </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {rows.map((row) => (
-                                        <TableRow key={row.id} className={classes.tableRow} component={Link} to={`/public/profile/${row.id}`}>
-                                            <TableCell component="th" scope="row" className={classes.tableUsername}>
-                                                {row.lastName}
-                                            </TableCell>
-                                            <TableCell align="center" className={classes.tableXP}>{row.XP} XP</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </Grid>
                 <Grid item xs={12} sm={3} lg={6}>
                     <Paper className={classes.toDoPaper}>Followers</Paper>
@@ -304,6 +276,6 @@ export default function Profile() {
                     </TableContainer>
                 </Grid>
             </Grid>
-         </div>
-     );
- }
+        </div>
+    );
+}

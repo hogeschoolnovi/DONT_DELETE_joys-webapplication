@@ -35,19 +35,19 @@ public class User {
     @JoinTable (name = "user_private_to_do",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "challenge_id"))
-    private List<ChallengeInformation> privateToDo;
+    private List<Challenge> privateToDo;
 
     @ManyToMany
     @JoinTable (name = "user_public_to_do",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "challenge_id"))
-    private List<ChallengeInformation> publicToDo;
+    private List<Challenge> publicToDo;
 
     @ManyToMany
     @JoinTable (name = "user_completed_to_do",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "challenge_id"))
-    private List<ChallengeInformation> completedToDo;
+    private List<Challenge> completedToDo;
 
     public User() {
 
@@ -99,27 +99,27 @@ public class User {
         this.roles = roles;
     }
 
-    public List<ChallengeInformation> getPrivateToDo() {
+    public List<Challenge> getPrivateToDo() {
         return privateToDo;
     }
 
-    public void setPrivateToDo(List<ChallengeInformation> privateToDo) {
+    public void setPrivateToDo(List<Challenge> privateToDo) {
         this.privateToDo = privateToDo;
     }
 
-    public List<ChallengeInformation> getPublicToDo() {
+    public List<Challenge> getPublicToDo() {
         return publicToDo;
     }
 
-    public void setPublicToDo(List<ChallengeInformation> publicToDo) {
+    public void setPublicToDo(List<Challenge> publicToDo) {
         this.publicToDo = publicToDo;
     }
 
-    public List<ChallengeInformation> getCompletedToDo() {
+    public List<Challenge> getCompletedToDo() {
         return completedToDo;
     }
 
-    public void setCompletedToDo(List<ChallengeInformation> completedToDo) {
+    public void setCompletedToDo(List<Challenge> completedToDo) {
         this.completedToDo = completedToDo;
     }
 }
