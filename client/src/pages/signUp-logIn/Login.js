@@ -79,7 +79,6 @@ function Login(){
             AuthService.login(values.username, values.password).then(function (response) {
                 console.log(response);
                 dispatch({ type: 'SIGN_IN', data: response});
-                alert("Log in was succesfull. Welcome back!");
                 history.push('/');
             }).catch((error) => {
                 console.log(error);

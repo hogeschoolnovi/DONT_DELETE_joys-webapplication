@@ -33,6 +33,7 @@ const login = async (username, password) => {
         }).then((response) => {
                 if (response.data.accessToken) {
                     console.log(response.data);
+                    alert("Log in was succesfull. Welcome back!");
                     return response.data;
                 } else {
                     alert("Sorry! Something went wrong");

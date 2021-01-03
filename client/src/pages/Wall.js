@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
         fontStyle: 'italic',
     },
     dividePaper: {
-        width: 650,
+        maxWidth: 650,
         // background: "#e3f2fd",
         margin: 30
     },

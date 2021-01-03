@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         marginTop: 250,
         margin: 'auto',
-        maxWidth: 450,
-        maxHeight: 300,
+        maxWidth: 600,
+        maxHeight: 500,
         background: '#B388EB',
         textAlign: 'center',
 
