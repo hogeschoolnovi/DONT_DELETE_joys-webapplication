@@ -47,6 +47,9 @@ function Game() {
 
     const [request, setRequest] = useState({state: "loading", data: null});
     useEffect(() => {
+        if (user == null) {
+            history.push('/401');
+        }
         const accessToken = user.accessToken;
         Utils.protectedGet("/api/games", accessToken).then((res) => {
                 console.log(res);

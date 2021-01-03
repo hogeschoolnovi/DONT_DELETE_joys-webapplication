@@ -2,7 +2,6 @@ package com.bannink.joys.service;
 
 import com.bannink.joys.domain.User;
 import com.bannink.joys.repository.IUserRepository;
-import com.bannink.joys.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
