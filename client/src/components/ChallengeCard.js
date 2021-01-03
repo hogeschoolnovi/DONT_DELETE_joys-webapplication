@@ -69,9 +69,6 @@ function ChallengeCard({challenge, onRemoveClick}) {
                 {challenge.name}
             </Typography>
             <Divider/>
-            <Typography variant="body2" className={classes.typographyDescription}>
-                {challenge.description}
-            </Typography>
             </Link>
             <Grid item>
                 {onRemoveClick &&
