@@ -35,3 +35,9 @@
 $cd server
 $mvn spring-boot:run
 - De back-end zou nu moeten opstarten
+
+<br/>
+
+Als het goed is kunt u registreren. Mocht dat door een bepaalde reden toch niet lukken kunt u met de volgende gegevens inloggen:
+- gebruikersnaam: naamnaam
+- wachtwoord: Wachtwoord12!
