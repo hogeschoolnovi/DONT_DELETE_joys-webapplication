@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 15,
         fontStyle: 'oblique',
     },
-    completeButton: {
+    Button: {
         background: '#6F2DBD',
         color: '#FFD166',
         margin: 6,
@@ -49,12 +49,6 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 10,
         fontStyle: 'oblique',
         textAlign: "left",
-        // marginRight: 150,
-
-    },
-    typographyProfile: {
-        color: '#6F2DBD',
-        fontSize: 18,
     },
 }));
 function ChallengeCard({challenge, onRemoveClick}) {
@@ -64,9 +58,9 @@ function ChallengeCard({challenge, onRemoveClick}) {
         <Paper key={challenge.id} elevation={5} className={classes.challengePaper}>
             <Link to={`/challenge/${challenge.id}`} style={{textDecoration: 'none'}}>
             <Typography variant="body2" className={classes.typographyJoined}>
-                amy +7 anderen joined this challenge
+                Amyban +7 anderen joined this challenge
                 <br/>
-                bla +2 anderen completed this challenge
+                Joycee +2 anderen completed this challenge
             </Typography>
             <Typography gutterBottom variant={"subtitle1"} className={classes.typographyTitle}>
                 {challenge.value}XP * {challenge.level}
@@ -81,7 +75,7 @@ function ChallengeCard({challenge, onRemoveClick}) {
             </Link>
             <Grid item>
                 {onRemoveClick &&
-                <Button variant={"contained"} className={classes.completeButton} onClick={() => {onRemoveClick()}}><RemoveCircleOutlineIcon/>remove</Button>
+                <Button variant={"contained"} className={classes.Button} onClick={() => {onRemoveClick()}}><RemoveCircleOutlineIcon/>remove</Button>
                 }
             </Grid></Paper>
     )

@@ -15,15 +15,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    // paper: {
-    //     padding: theme.spacing(2),
-    //     marginTop: 250,
-    //     margin: 'auto',
-    //     maxWidth: 450,
-    //     maxHeight: 300,
-    //     background: '#B388EB',
-    //     textAlign: 'center',
-    // },
     challengePaper: {
         padding: theme.spacing(2),
         marginTop: 250,
@@ -64,16 +55,11 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 150,
 
     },
-    typographyProfile: {
-        color: '#6F2DBD',
-        fontSize: 18,
-    },
 }));
-function Challenge(challenge) {
+function Challenge() {
     const classes = useStyles();
     const user = useSelector((state) => state.user);
     const history = useHistory();
-    // const [request, setRequest] = useState({state: "loading", data: null});
     if (user == null) {
         history.push('/401');
     }
@@ -165,8 +151,8 @@ function Challenge(challenge) {
                 </Tooltip>
             </Grid></Paper>
             }
-            {/*// {request.state === "loading" && <p>aan het laden</p>}*/}
-            {/*// {request.state === "error" && <p>error</p>}*/}
+             {request.state === "loading" && <p>aan het laden</p>}
+             {request.state === "error" && <p>error</p>}
         </div>
 
     )

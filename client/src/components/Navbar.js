@@ -15,20 +15,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
 import Typography from "@material-ui/core/Typography";
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
 import PersonIcon from '@material-ui/icons/Person';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import AuthService from "../../clientServices/AuthService";
-import useCurrentUser from "../../hooks/UseCurrentUser";
 import {useDispatch, useSelector} from "react-redux";
-import AppsIcon from '@material-ui/icons/Apps';
 import BookIcon from '@material-ui/icons/Book';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
 const drawerWidth = 240;
 
@@ -72,7 +66,6 @@ const useStyles = makeStyles((theme) => ({
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
-
     },
     content: {
         flexGrow: 1,

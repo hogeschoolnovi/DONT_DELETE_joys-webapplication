@@ -3,17 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {useSelector} from "react-redux";
-import * as axios from "axios";
-import {Button, CardActionArea, Divider, IconButton} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import {AddCircle, RemoveCircle} from "@material-ui/icons";
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import {Link, useHistory, useParams} from "react-router-dom";
 import Utils from "../clientServices/Utils";
-import ChallengeCard from "../components/ChallengeCard";
-import {isEmptyArray} from "formik";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -133,19 +125,9 @@ export default function Profile() {
     const accessToken = user?.accessToken;
     let {id} = useParams();
 
-    if (user == null) {
-        history.push('/401');
-    }
-    // const id = user.id;
-    // if (user.id != {id}){
-    //     history.push('/401');
-    // }
     const getProfile = (user, setRequest) => {
         if (user != null) {
-            // if (user.id != {id}){
-            //     history.push('/401');
-            // }
-            Utils.protectedGet(`/api/profile/public/${id}`, user.accessToken).then((res) => {
+            Utils.protectedGet(`/api/profile/public/${id}`, accessToken).then((res) => {
                 if (res) {
                     console.log(res);
                     setRequest({state: "done", data: res.data});
@@ -155,11 +137,6 @@ export default function Profile() {
             })
         }
     }
-
-    useEffect(() => {
-        getProfile(user, setRequest)
-    },[])
-
     const publicChallenges= request.state!=="done"?[]:request.data.publicToDo;
     const completedChallenges= request.state!=="done"?[]:request.data.completedToDo;
 
@@ -183,6 +160,14 @@ export default function Profile() {
         { id: 18, lastName: 'Frances', firstName: 'Rossini', XP: 36 },
         { id: 19, lastName: 'Roxie', firstName: 'Harvey', XP: 65 },
     ];
+
+    if (user == null) {
+        history.push('/401');
+    }
+
+    useEffect(() => {
+        getProfile(user, setRequest)
+    },[])
 
     return (
         <div className={classes.root}>

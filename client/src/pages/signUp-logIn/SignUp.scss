@@ -1,17 +1,6 @@
 $primary-color: #CD0276;
 
 .sign-up-button {
-  margin-top: 30px;
-  height: 50px;
-  width: 301px;
-  color: white;
-  background-color: $primary-color;
-  border-radius: 20px;
-  border: none;
-  font-size: 22px;
-  &:hover {
-    background-color: black;
-  }
   &[disabled] {
     opacity: 0.6;
     cursor: not-allowed;
@@ -30,38 +19,3 @@ input {
   font: 20px bold;
 }
 
-.sign-up-form {
-  width: 500px;
-  height: 200px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 150px;
-  text-align: center;
-  position: relative;
-  align-self: center;
-
-}
-.fieldset {
-  background: white;
-  border: 0 none;
-  border-radius: 10px;
-  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-  padding: 30px 30px;
-  box-sizing: border-box;
-  width: 80%;
-  align-self: center;
-}
-
-.sign-up-br {
-  display: block;
-  margin-bottom: 1em;
-}
-img {
-  max-width: 70px;
-  max-height: 35px;
-  //margin-left: 45%;
-  margin-top: 0;
-  margin-bottom: 150px;
-  position: relative;
-  align-self: center;
-}

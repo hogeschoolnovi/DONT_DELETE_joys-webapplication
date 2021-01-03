@@ -4,11 +4,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import {Button, Divider} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import {RemoveCircle} from "@material-ui/icons";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import {Link, useHistory} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {GrTooltip} from "react-icons/all";
 import Tooltip from "@material-ui/core/Tooltip";
 import PublicChallengeCard from "../components/PublicChallengeCard";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -17,7 +14,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import { DataGrid } from '@material-ui/data-grid';
 import Utils from "../clientServices/Utils";
 
 
@@ -28,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     paperHeader: {
         marginTop: 0,
         padding: theme.spacing(4),
-        // height: 150,
         textAlign: 'center',
         background: 'none',
         color: '#6F2DBD',
@@ -39,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 10,
         padding: theme.spacing(2),
         textAlign: 'center',
-        // height: 140,
         color: theme.palette.text.secondary,
     },
     paper: {
@@ -49,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
         maxWidth: 463,
-
     },
     challengePaper: {
         padding: theme.spacing(2),
@@ -57,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
         background: '#B388EB',
         margin: 10,
         maxWidth: 411,
-
     },
     typographyTitle: {
         color: '#FFD166',
@@ -146,9 +138,7 @@ function Wall() {
     ]
     const user = useSelector((state) => state.user);
     const history = useHistory();
-    if (user == null) {
-        history.push('/401');
-    }
+
     const columns = [
         { field: 'firstName', headerName: 'User name', width: 130 },
         {
@@ -179,7 +169,9 @@ function Wall() {
         { id: 19, lastName: 'Roxie', firstName: 'Harvey', XP: 65 },
     ];
 
-
+    if (user == null) {
+        history.push('/401');
+    }
 
     return(
         <Grid container className={classes.root}>
@@ -229,7 +221,8 @@ function Wall() {
                                             </Grid>
 
                                             <Grid item>
-                                                <PublicChallengeCard challenge={publicChallenges}/>
+                                                {/*<PublicChallengeCard challenge={publicChallenges}/>*/}
+
                                                 <Paper key={challenge.id} elevation={5} className={classes.challengePaper}>
                                                     <Typography variant="body2" className={classes.typographyJoined}>
                                                         amy +7 anderen joined this challenge
@@ -240,13 +233,12 @@ function Wall() {
                                                         {challenge.value}XP * {challenge.level}
                                                     </Typography>
                                                     <Typography variant="body2" gutterBottom className={classes.typographyChallenge}>
-                                                        {challenge.title}
+                                                        {challenge.name}
                                                     </Typography>
                                                     <Divider/>
                                                     <Typography variant="body2" className={classes.typographyDescription}>
                                                         {challenge.description}
                                                     </Typography>
-
                                                 </Paper>
                                             </Grid>
                                         </Paper>
@@ -277,11 +269,10 @@ function Wall() {
                                             </TableHead>
                                             <TableBody>
                                                 {rows.map((row) => (
-                                                    <TableRow key={row.id} className={classes.tableRow}>
+                                                    <TableRow key={row.id} className={classes.tableRow} component={Link} to={`/public/profile/${row.id}`} style={{textDecoration: 'none'}}>
                                                         <TableCell component="th" scope="row" className={classes.tableUsername}>
                                                             {row.lastName}
                                                         </TableCell>
-                                                        {/*<TableCell align="right">{row.lastName}</TableCell>*/}
                                                         <TableCell align="center" className={classes.tableXP}>{row.XP} XP</TableCell>
                                                     </TableRow>
                                                 ))}

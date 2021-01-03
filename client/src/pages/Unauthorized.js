@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-
 function Unauthorized() {
     const classes = useStyles();
     return(
@@ -49,5 +48,4 @@ function Unauthorized() {
         </Paper>
     )
 }
-
 export default Unauthorized;

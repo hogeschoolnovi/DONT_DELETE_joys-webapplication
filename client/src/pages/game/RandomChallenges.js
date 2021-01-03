@@ -11,41 +11,7 @@ import ActionChallengeCard from "../../components/ActionChallengeCard";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(2),
-        marginTop: 250,
-        margin: 'auto',
-        maxWidth: 450,
-        maxHeight: 300,
-        background: '#B388EB',
-        textAlign: 'center',
-    },
-    typographyTitle: {
-        color: '#FFD166',
-        fontSize: 18,
-
-    },
-    typographyChallenge: {
-        color: '#FFD166',
-        fontSize: 28,
-        fontWeight: 'medium',
-    },
-    typographyDescription: {
-        color: '#6F2DBD',
-        fontSize: 15,
-        fontStyle: 'oblique',
-    },
-    completeButton: {
-        background: '#6F2DBD',
-        color: '#FFD166',
-        margin: 6,
-        '&:hover': {
-            background: '#FFD166',
-            color: '#6F2DBD',
-        }
-    }
-}));
+}}));
 
 function getNewRandomChallenge(challenges){
     return challenges[Math.floor(Math.random() * challenges.length)];

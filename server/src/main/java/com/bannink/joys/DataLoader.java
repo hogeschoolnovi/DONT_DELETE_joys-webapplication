@@ -35,16 +35,16 @@ public class DataLoader implements ApplicationRunner {
     }
     public void run(ApplicationArguments args) {
         Game game = new Game();
-        game.setName("5 Min Challenge");
-        game.setDescription("descr");
+        game.setName("5 Minute Challenge");
+        game.setDescription("Take a quick break to place your attention back to yourself with short challenge");
         gameInformationRepository.save(game);
         Game game2 = new Game();
-        game2.setName("15 Min Challenge");
-        game2.setDescription("descr");
+        game2.setName("15 Minute Challenge");
+        game2.setDescription("This is a great way to practice mindfullness daily and it will only take 15 minutes out of your day");
         gameInformationRepository.save(game2);
         Game game3 = new Game();
-        game3.setName("Day Challenge");
-        game3.setDescription("descr");
+        game3.setName("24 Hour Challenge");
+        game3.setDescription("Think you're up for a difficult challenge? You will get a challenge that you have to practice throughout the day");
         gameInformationRepository.save(game3);
 
         Challenge challenge1 = new Challenge();

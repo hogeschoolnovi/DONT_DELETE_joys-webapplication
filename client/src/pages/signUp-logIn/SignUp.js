@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import * as yup from "yup";
 import {useFormik} from "formik";
 import './SignUp.scss';
-import FormField from "./SignUpFormField";
+import FormField from "../../components/SignUpFormField";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
@@ -44,9 +44,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignUp() {
-
-    const [error, setError] = useState('');
-
     const initialValues = {
         username: "",
         email: "",
@@ -58,21 +55,28 @@ function SignUp() {
         username: yup
             .string()
             .required("Username is a required field")
-            .min(6, "Username must be at least 6 characters"),
+            .min(6, "Username must be at least 6 characters")
+            .max(20, "Username can't be more than 20 characters"),
+
         email: yup
             .string()
             .email()
-            .required("Email is a required field"),
+            .required("Email is a required field")
+            .max(30, "Username can't be more than 30 characters"),
+
         password: yup
             .string()
             .required("Please enter your password")
             .matches(
                 /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
                 "Password must contain at least 8 characters, one uppercase, one number and one special character"
-            ),
+            )
+            .max(40, "Password can't be more than 40 characters"),
+
         confirmPassword: yup
             .string()
             .required("Please confirm your password")
+            .max(40, "Password can't be more than 40 characters")
             .when("password", {
                 is: password => (password && password.length > 0 ? true : false),
                 then: yup.string().oneOf([yup.ref("password")], "Password doesn't match")
@@ -137,7 +141,6 @@ function SignUp() {
                     <Typography className={classes.typographyDescription}>
                         Already have an account? <Link to={'/login'}>Log in here!</Link>
                     </Typography>
-
                     <Button size={'large'} className={classes.signUpButton} type="submit" disabled={!(formik.isValid && formik.dirty)}>Submit</Button>
                 </form>
             </Paper>

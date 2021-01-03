@@ -4,7 +4,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import * as yup from "yup";
 import {useFormik} from "formik";
 import Paper from "@material-ui/core/Paper";
-import FormField from "./SignUpFormField";
+import FormField from "../../components/SignUpFormField";
 import Button from "@material-ui/core/Button";
 import AuthService from "../../clientServices/AuthService";
 import {useDispatch} from "react-redux";
@@ -47,7 +47,6 @@ function Login(){
     let history = useHistory();
     const classes = useStyles();
     const dispatch = useDispatch();
-
 
     const initialValues = {
         username: "",

@@ -41,10 +41,7 @@ const login = async (username, password) => {
             console.log(error)
             alert("Sign in failed")
     })
-
-    }
-
-
+}
 export default {
     register,
     getCurrentUser,

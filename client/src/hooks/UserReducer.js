@@ -1,5 +1,3 @@
-import React, {useReducer} from "react";
-
 const initialState = {user: null};
 
 export function userReducer(state = initialState, action) {

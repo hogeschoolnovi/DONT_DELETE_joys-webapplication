@@ -17,7 +17,7 @@ import {
     Unauthorized,
     Challenge,
 } from './index';
-import NavBar from "../components/menu/Navbar";
+import NavBar from "../components/Navbar";
 import {userReducer} from "../hooks/UserReducer";
 import PublicProfile from "../pages/PublicProfile";
 

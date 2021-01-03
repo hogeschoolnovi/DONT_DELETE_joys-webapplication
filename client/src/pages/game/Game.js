@@ -2,13 +2,10 @@ import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import {CardActionArea} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import * as axios from "axios";
 import {useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import Utils from "../../clientServices/Utils";
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
             padding: 30,
         }
     },
-    control: {
-        padding: theme.spacing(4),
-    },
     challengeTitle: {
         color: '#6F2DBD',
         fontSize: 25,
@@ -42,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Game() {
     const history = useHistory();
-    const [spacing] = React.useState(4);
+    const [spacing] = useState(4);
     const classes = useStyles();
 
     const user = useSelector((state) => state.user);
@@ -58,12 +52,9 @@ function Game() {
                 console.log(res);
                 setRequest({state: "done", data: res.data});
             })
-
     },[])
 
-
     return (
-
         <Grid container className={classes.root} spacing={2}>
             <Grid item xs={12}>
                 <Grid container justify="center" spacing={spacing}>

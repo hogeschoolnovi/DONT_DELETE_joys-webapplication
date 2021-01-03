@@ -3,17 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {useSelector} from "react-redux";
-import * as axios from "axios";
-import {Button, CardActionArea, Divider, IconButton} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import {AddCircle, RemoveCircle} from "@material-ui/icons";
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-import {Link, useHistory, useParams} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import Utils from "../clientServices/Utils";
 import ChallengeCard from "../components/ChallengeCard";
-import {isEmptyArray} from "formik";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -26,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     paper: {
-
         marginTop: 0,
         marginBottom: 60,
         padding: theme.spacing(4),
@@ -134,15 +126,8 @@ export default function Profile() {
     if (user == null) {
         history.push('/401');
     }
-    // const id = user.id;
-    // if (user.id != {id}){
-    //     history.push('/401');
-    // }
     const getProfile = (user, setRequest) => {
         if (user != null) {
-            // if (user.id != {id}){
-            //     history.push('/401');
-            // }
             const id = user.id;
             Utils.protectedGet(`/api/profile/${id}`, user.accessToken).then((res) => {
                 if (res) {
@@ -269,7 +254,7 @@ export default function Profile() {
                                 </TableHead>
                                 <TableBody>
                                     {rows.map((row) => (
-                                        <TableRow key={row.id} className={classes.tableRow} component={Link} to={`/public/profile/${row.id}`}>
+                                        <TableRow key={row.id} className={classes.tableRow} component={Link} to={`/public/profile/${row.id}`} style={{textDecoration: 'none'}}>
                                             <TableCell component="th" scope="row" className={classes.tableUsername}>
                                                 {row.lastName}
                                             </TableCell>
@@ -292,7 +277,7 @@ export default function Profile() {
                             </TableHead>
                             <TableBody>
                                 {rows.map((row) => (
-                                    <TableRow key={row.id} className={classes.tableRow}>
+                                    <TableRow key={row.id} className={classes.tableRow} component={Link} to={`/public/profile/${row.id}`} style={{textDecoration: 'none'}}>
                                         <TableCell component="th" scope="row" className={classes.tableUsername}>
                                             {row.lastName}
                                         </TableCell>
