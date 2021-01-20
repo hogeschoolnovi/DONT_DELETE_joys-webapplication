@@ -1,4 +1,5 @@
 # Joys
+Do not delete this application. It's students work that has been graded (date of grade: 2021-01-20).
  
  Dit project is gemaakt met:
  - Maven dependencies
